@@ -5,6 +5,7 @@ contract ENSContract {
     struct UserInfo {
         string name;
         string imageUrl;
+        address userAddress;
     }
 
     mapping(string => address) public ensMapping;
@@ -19,7 +20,7 @@ contract ENSContract {
     }
 
     function createENS(string memory name, string memory imageUrl) public nameAndUserNotExists(name) {
-        UserInfo memory userInfo = UserInfo(name, imageUrl);
+        UserInfo memory userInfo = UserInfo(name, imageUrl, msg.sender);
         ensMapping[name] = msg.sender;
         userMapping[msg.sender] = userInfo;
         reverseEnsMapping[msg.sender] = name;
